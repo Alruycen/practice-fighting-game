@@ -320,13 +320,17 @@ let jump = document.querySelector('#moveJump');
 let attack1 = document.querySelector('#moveAttack1');
 
 if (!player.dead) {
-    left.addEventListener('mousedown', () => {
-        button.left.pressed = true;
-        player.lastKey = 'a';
+    ['mousedown', 'touchstart'].forEach(function(event) { 
+        left.addEventListener(event, () => {
+            button.left.pressed = true;
+            player.lastKey = 'a';
+        });
     });
-    right.addEventListener('mousedown', () => {
-        button.right.pressed = true;
-        player.lastKey = 'd';
+    ['mousedown', 'touchstart'].forEach(function(event) { 
+        right.addEventListener(event, () => {
+            button.right.pressed = true;
+            player.lastKey = 'd';
+        });
     });
     jump.addEventListener('mousedown', () => {
         player.velocity.y = -20;
@@ -336,10 +340,13 @@ if (!player.dead) {
     });
 }
 
-left.addEventListener('mouseup', () => {
-    button.left.pressed = false;
+['mouseup', 'touchend'].forEach(function(event) { 
+    left.addEventListener(event, () => {
+        button.left.pressed = false;
+    });
 });
-
-right.addEventListener('mouseup', () => {
-    button.right.pressed = false;
+['mouseup', 'touchend'].forEach(function(event) { 
+    right.addEventListener(event, () => {
+        button.right.pressed = false;
+    });
 });
