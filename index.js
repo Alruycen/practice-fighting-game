@@ -152,6 +152,15 @@ const keys = {
 
 };
 
+const button = {
+    left: {
+        pressed: false
+    },
+    right: {
+        pressed: false
+    },
+}
+
 decreaseTimer();
 
 function animate() {
@@ -172,9 +181,18 @@ function animate() {
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5;
         player.switchSprite("run");
+    } else if (button.left.pressed && player.lastKey === 'a') {
+        player.velocity.x = -5;
+        player.switchSprite("run");
+    } else if (button.right.pressed && player.lastKey === 'd') {
+        player.velocity.x = 5;
+        player.switchSprite("run");
     } else {
         player.switchSprite("idle");
     }
+    
+
+    
 
     if (player.velocity.y < 0) {
         player.switchSprite("jump");
@@ -252,6 +270,7 @@ window.addEventListener('keydown', (event) => {
                 player.attack();
                 break;
         }
+
     }
     if (!enemy.dead) {
         switch (event.key) {
@@ -283,8 +302,8 @@ window.addEventListener('keyup', (event) => {
         case 'a':
             keys.a.pressed = false;
             break;
-
     }
+    
     switch (event.key) {
         case 'ArrowRight':
             keys.ArrowRight.pressed = false;
@@ -293,4 +312,34 @@ window.addEventListener('keyup', (event) => {
             keys.ArrowLeft.pressed = false;
             break;
     }
+});
+
+let left = document.querySelector('#moveLeft');
+let right = document.querySelector('#moveRight');
+let jump = document.querySelector('#moveJump');
+let attack1 = document.querySelector('#moveAttack1');
+
+if (!player.dead) {
+    left.addEventListener('mousedown', () => {
+        button.left.pressed = true;
+        player.lastKey = 'a';
+    });
+    right.addEventListener('mousedown', () => {
+        button.right.pressed = true;
+        player.lastKey = 'd';
+    });
+    jump.addEventListener('mousedown', () => {
+        player.velocity.y = -20;
+    });
+    attack1.addEventListener('mousedown', () => {
+        player.attack();
+    });
+}
+
+left.addEventListener('mouseup', () => {
+    button.left.pressed = false;
+});
+
+right.addEventListener('mouseup', () => {
+    button.right.pressed = false;
 });
